@@ -8,6 +8,4 @@ As projects are made, I will leave a brief description with assigned file list b
 In this project, I utilized SQL for data exploration and Tableu for data visualiation methods. The skills I used are: Joins, CTE's, Temp Tables, Windows Functions, Aggregate Functions, Creating Views, Converting Data Types. This was my first project using SQL. 
 
 Files:
-CovidDeaths.xlsx
-CovidVaccinations.xlsx
-COVID19_Data_Exploration.sql
+CovidDeaths.xlsx, CovidVaccinations.xlsx, COVID19_Data_Exploration.sql, Dashboard 1
