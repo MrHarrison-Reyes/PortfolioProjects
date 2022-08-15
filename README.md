@@ -9,3 +9,9 @@ In this project, I utilized SQL for data exploration and Tableu for data visuali
 
 Files:
 CovidDeaths.xlsx, CovidVaccinations.xlsx, COVID19_Data_Exploration.sql, Dashboard 1
+
+
+## Movie Industry Correlation Project 2022
+In this project, I utilized Pyton and Jupyter Notebook to import movie industry file from Kaggle (CSV file) and prove my hypothesis that there is a strong correlation between how much the budget for the film was to its gross earnings. I used Seaborn, Pandas, and Matplotlib to run statistical analysis and create visualizations to tell the story of the data. 
+Files:
+Movie Industry Project 2022.ipynb, movies.csv
