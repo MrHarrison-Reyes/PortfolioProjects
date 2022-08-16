@@ -19,3 +19,8 @@ Movie Industry Project 2022.ipynb, movies.csv
 ## GE Employee Attrition Project
 I created a predictive data analytic model with documentation and visualizations using R and Rattle that will serve as a report for stakeholders to effectively communicate the potential value of the predictive model can add to the organization.
 Files: DAT690 Attrition- Proj2EmpSalaryTrain, DAT690 Attrition- Proj2EmpSalaryVerifiy, GE_attrition_salary_model, DAT 690-Final Capstone Project THR.
+
+## Nashville Housing Data Cleaning 
+I used SQL to clean housing data by standardzing the dataset, seperating addresses into individual columns, remove duplicates, anddelete unused columns. 
+
+Files: Data Cleaning Queries.sql, Nashville Housing for Data Cleaning.csv
