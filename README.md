@@ -24,3 +24,7 @@ Files: DAT690 Attrition- Proj2EmpSalaryTrain, DAT690 Attrition- Proj2EmpSalaryVe
 I used SQL to clean housing data by standardzing the dataset, seperating addresses into individual columns, remove duplicates, anddelete unused columns. 
 
 Files: Data Cleaning Queries.sql, Nashville Housing for Data Cleaning.csv
+
+## Finance Report
+This is my first project using Python for data analysis. This project focuses on exploratory data analysis of stock prices. I utilized Seaborn, Pandas, and Matplotlib to visualize various graphs. 
+Files: Finance Report-Harrison_Reyes
