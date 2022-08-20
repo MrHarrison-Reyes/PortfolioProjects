@@ -25,6 +25,10 @@ I used SQL to clean housing data by standardzing the dataset, seperating address
 
 Files: Data Cleaning Queries.sql, Nashville Housing for Data Cleaning.csv
 
+## TIC Caravan Insurance Predictive Model Analysis
+In this project, I was tasked to create a predictive model to determine which existing customers woul be the most likely to buy new caravan insurance from The Insurance Company (TIC). Using R, I evaluated several predictive models including decision tress and linear regression. After careful evaluatuion of the models, I determined that a random forest model would be TIC's best choise to meet their needs. 
+Files: TIC data analysis.R,  TIC Predictive Analysis.pdf
+
 ## Finance Report
 This is my first project using Python for data analysis. This project focuses on exploratory data analysis of stock prices. I utilized Seaborn, Pandas, and Matplotlib to visualize various graphs. 
 Files: Finance Report-Harrison_Reyes
