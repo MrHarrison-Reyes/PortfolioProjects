@@ -23,6 +23,7 @@
 var SPREADSHEET_ID = "Spreadsheet_ID" // Replace with your Sign-Out log spreadsheet ID
 var INVENTORY_SPREADSHEET_ID = "Inventory_Spreadhseet_ID"; // Replace with your Loaner Inventory Spreadsheet ID
 var INVENTORY_SHEET_NAME = "Daily Loaners"; // Sheet name containing the list of valid Asset Tags
+var EMAIL_RECIPIENTS = ["your.email@example.com", "another.email@example.com"]; // Replace with actual emails
 
 /**
  * Handles HTTP GET requests when the web app is accessed.
@@ -77,6 +78,22 @@ function isValidAssetTag(assetTag) {
 }
 
 /**
+ * Validates that ID and Asset Tag are 6-digit numbers.
+ * @param {string} id - The inputted ID.
+ * @param {string} assetTag - The inputted Asset Tag.
+ * @returns {boolean|string} - Returns true if valid, otherwise an error message.
+ */
+function validateInput(id, assetTag) {
+  var sixDigitPattern = /^\d{6}$/; // Regex: Must be exactly 6 digits (0-9)
+
+  if (!sixDigitPattern.test(id) || !sixDigitPattern.test(assetTag)) {
+    return "Asset Tag and ID must be a 6-digit number (i.e., 123456). Please check your input and try again.";
+  }
+
+  return true;
+}
+
+/**
  * Records a sign-out event if the Asset Tag exists in inventory.
  * @param {string} name - Borrower's name.
  * @param {string} id - 6-digit borrower ID.
@@ -84,6 +101,12 @@ function isValidAssetTag(assetTag) {
  * @returns {string} - Confirmation message or error.
  */
 function recordSignOut(name, id, assetTag) {
+  var validation = validateInput(id, assetTag);
+  if (validation !== true) {
+    Logger.log("Validation Error: " + validation);
+    return validation;
+  }
+
   if (!isValidAssetTag(assetTag)) {
     Logger.log("ERROR: Asset Tag not found in inventory: " + assetTag);
     return "No Such Loaner in Inventory. Please check Asset Tag and try again.";
@@ -128,4 +151,51 @@ function recordSignIn(assetTag) {
 
   Logger.log("WARNING: No matching sign-out found for Asset Tag: " + assetTag);
   return "Error: No record of this Asset Tag being signed out.";
+}
+
+/**
+ * Runs daily to check overdue sign-outs (12+ hours overdue) and sends a single report.
+ */
+function checkOverdueLoaners() {
+  var ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  var sheets = ss.getSheets();
+  var now = new Date();
+  var overdueEntries = [];
+
+  Logger.log("Running daily overdue check...");
+
+  for (var s = 0; s < sheets.length; s++) {
+    var sheet = sheets[s];
+    var data = sheet.getDataRange().getValues();
+
+    for (var i = 1; i < data.length; i++) {
+      if (data[i][4] === "" && data[i][3]) { // If not signed in
+        var signedOutTime = new Date(data[i][3]);
+        var hoursDiff = (now - signedOutTime) / (1000 * 60 * 60);
+
+        if (hoursDiff > 12) {
+          overdueEntries.push(
+            `Name: ${data[i][0]}\nID: ${data[i][1]}\nAsset Tag: ${data[i][2]}\nSigned Out: ${data[i][3]}\n`
+          );
+        }
+      }
+    }
+  }
+
+  if (overdueEntries.length > 0) {
+    var message = `🚨 **Overdue Loaner Report** 🚨\n\nThe following devices are overdue (signed out for more than 12 hours):\n\n`;
+    message += overdueEntries.join("\n----------------------\n");
+
+    MailApp.sendEmail({
+      to: EMAIL_RECIPIENTS.join(","),
+      subject: "Daily Overdue Loaner Report",
+      body: message
+    });
+
+    Logger.log("Daily overdue email sent with " + overdueEntries.length + " overdue records.");
+  } else {
+    Logger.log("No overdue loaners found.");
+  }
+
+  Logger.log("Daily overdue check completed.");
 }
